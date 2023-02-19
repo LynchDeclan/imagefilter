@@ -40,8 +40,8 @@ def main():
     # open the new image
     new_image.show()
 
-    flip_ask = input("CHoose between a vertical flip or a horizontral flip [vertical/horizontal]: ")\
-
+    flip_ask = input("CHoose between a vertical flip or a horizontral flip [vertical/horizontal]: ")
+    # the transpose function from the image module in the pillow library allows us to flip and rotate the image in 90-degree steps
     if flip_ask == "horizontal":
         # flip the image horizontally
         horizontal_flip = image.transpose(Image.FLIP_LEFT_RIGHT)
