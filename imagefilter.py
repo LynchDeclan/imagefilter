@@ -40,5 +40,16 @@ def main():
     # open the new image
     new_image.show()
 
+    flip_ask = input("CHoose between a vertical flip or a horizontral flip [vertical/horizontal]: ")\
+
+    if flip_ask == "horizontal":
+        # flip the image horizontally
+        horizontal_flip = image.transpose(Image.FLIP_LEFT_RIGHT)
+        horizontal_flip.show()
+    if flip_ask == "vertical":
+        # flip the image vertically
+        vertical_flip = image.transpose(Image.FLIP_TOP_BOTTOM)
+        vertical_flip.show()
+
 if __name__ == "__main__":
     main()
