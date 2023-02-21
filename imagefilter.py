@@ -13,10 +13,10 @@ def main():
     width, height = image.size
 
     # get the rgb values of a pixel at a certain coordinate
-    r, g, b = image.getpixel((50, 50))
     
     # create a new image of the same size as the original
     new_image = Image.new("RGB", (image.size), "white")
+
 
 
     def grayscale():
@@ -47,12 +47,17 @@ def main():
         # the transpose function from the image module in the pillow library allows us to flip and rotate the image in 90-degree steps
         if flip_ask == "horizontal":
             # flip the image horizontally
-            horizontal_flip = image.transpose(Image.FLIP_LEFT_RIGHT)
-            horizontal_flip.show()
-        if flip_ask == "vertical":
+            #horizontal_flip = image.transpose(Image.FLIP_LEFT_RIGHT)
+            #horizontal_flip.show()
+            arr = []
+            for y in range(height):
+                for x in range(width):
+                    arr.append(image.getpixel(x,0))
+            image.show()
+        #if flip_ask == "vertical":
             # flip the image vertically
-            vertical_flip = image.transpose(Image.FLIP_TOP_BOTTOM)
-            vertical_flip.show()
+            #vertical_flip = image.transpose(Image.FLIP_TOP_BOTTOM)
+            #vertical_flip.show()
 
     #def shrink():
     #def hide():
