@@ -1,6 +1,7 @@
 # run pip install pillow to install
 from PIL import Image
 import math
+import sys
 
 def main():
     # Open image
@@ -13,6 +14,7 @@ def main():
     width, height = image.size
 
     # get the rgb values of a pixel at a certain coordinate
+    r, g, b = image.getpixel((50, 50))
     
     # create a new image of the same size as the original
     new_image = Image.new("RGB", (image.size), "white")
@@ -60,8 +62,29 @@ def main():
             vertical_flip.show()
 
     #def shrink():
-    #def hide():
 
+    def hide():
+        hidden_message = input("What is your hidden message?: ")
+        characters = []
+        for char in hidden_message:
+            characters.append(char)
+
+        for c in characters:
+            for x in range(width):
+                for y in range(height):
+                    bin_red = (bin(r)[2:6])
+                    bin_green = (bin(g)[2:6])
+                    bin_blue = (bin(b)[2:6])
+                    
+                    binary_value = (bin(ord(c))[2:6])
+                    hidden_red = int(bin_red + binary_value)
+                    hidden_green = int(bin_green + binary_value)
+                    hidden_blue = int(bin_blue + binary_value)
+
+                    new_image.putpixel((x, y), (hidden_red, hidden_green, hidden_blue))
+        
+        new_image.show()
+                    
     # ask the user what they want to do with this image
     choice_of_function = input(
         "Choose to run (grayscale), (flip), (shrink), or (hide): ")
@@ -71,8 +94,8 @@ def main():
         flip()
     #if choice_of_function == "shrink":
         #shrink()
-    #if choice_of_function == "hide":
-        #hide()
+    if choice_of_function == "hide":
+        hide()
 
 if __name__ == "__main__":
     main()
