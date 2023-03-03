@@ -104,29 +104,49 @@ def Shrinks(new_image, width, height, image):
     shrink_image.show()
 
 def hide(image):
+    # gets the width and height of the image
     width, height = image.size
-    r, g, b = image.getpixel((50, 50))
+    # creates a new image that is the same size as the old one, gets rgb format, and makes it pure white
     new_image = Image.new("RGB", (image.size), "white")
-    hidden_message = input("What is your hidden message?: ")
-    characters = []
-    for char in hidden_message:
-        characters.append(char)
+    # variable that asks the user whether they want to hide an image or a message
+    func_choice = input("Do you wish to hide an image or a message? [image/message]: ")
+    if func_choice == "message":
+        # asks the user for their hidden message
+        hidden_message = input("What is your hidden message?: ")
+        # defines an empty array
+        characters = []
+        # add every individual character of the hidden message into the empty array
+        for char in hidden_message:
+            characters.append(char)
 
-    for c in characters:
+        # gets a characters for each pixel.
         for x in range(width):
             for y in range(height):
-                bin_red = (bin(r)[2:6])
-                bin_green = (bin(g)[2:6])
-                bin_blue = (bin(b)[2:6])
-                
-                binary_value = (bin(ord(c))[2:6])
-                hidden_red = int(bin_red + binary_value)
-                hidden_green = int(bin_green + binary_value)
-                hidden_blue = int(bin_blue + binary_value)
-
-                new_image.putpixel((x, y), (hidden_red, hidden_green, hidden_blue))
-    
-    new_image.show()
+                for c in characters:
+                    # gets the rgb values for each pixel.
+                    r, g, b = image.getpixel((x, y))
+                    # gets the first four binary values of the red rgb value as a string.
+                    bin_red = (bin(r)[2:6])
+                    # gets the first four binary values of the green rgb value as a string.
+                    bin_green = (bin(g)[2:6])
+                    bin_blue = b
+                    # converts the ASCII values of the character into a binary string.
+                    bin_letter_value = (bin(ord(c)))
+                    # gets the first half of the character's bvinary value.
+                    firsthalf_character_value1 = ( bin_letter_value[2:6])
+                    # gets the second half of the character's bvinary value.
+                    firsthalf_character_value2 = ( bin_letter_value[7:10])
+                    # adds the first half of the binary character value to the binary red value.
+                    hidden_red = int(bin_red + firsthalf_character_value1)
+                    # adds the second half of the binary character value to the binary green value.
+                    hidden_green = int(bin_green + firsthalf_character_value2)
+                    # put in the new rgb values into the new image in the same position as they were in the old image.
+                    new_image.putpixel((x, y), (hidden_red, hidden_green, bin_blue))
+                    # checks whether the algorithm has iterated over the last character
+                    if c == characters[-1]:
+                        
+                    
+        new_image.show()
                     
 
 
