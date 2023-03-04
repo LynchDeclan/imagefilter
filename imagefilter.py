@@ -110,6 +110,7 @@ def hide(image):
     new_image = Image.new("RGB", (image.size), "white")
     # variable that asks the user whether they want to hide an image or a message
     func_choice = input("Do you wish to hide an image or a message? [image/message]: ")
+    
     if func_choice == "message":
         # asks the user for their hidden message
         hidden_message = input("What is your hidden message?: ")
@@ -144,9 +145,17 @@ def hide(image):
                     new_image.putpixel((x, y), (hidden_red, hidden_green, bin_blue))
                     # checks whether the algorithm has iterated over the last character
                     if c == characters[-1]:
+                        # iterates through all pixels vertical for every horizontal pixel that is being iterated through
+                        for x in range(width):
+                            for y in range(height):
+                                # gets the rgb values for evry single pixel after the iteration is done
+                                r, g, b = image.getpixel((x, y))
+                                # puts a new pixel back into the new image in the same position
+                                new_image.putpixel((x, y), (r, g, b))
+                        new_image.show()
+                        sys.exit()
                         
                     
-        new_image.show()
                     
 
 
