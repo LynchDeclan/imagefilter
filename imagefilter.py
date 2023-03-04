@@ -7,9 +7,6 @@ def main():
     # Open image
     image = Image.open('nightbee.png')
 
-    # Show image
-    image.show()
-
     # get the height and width
     width, height = image.size
 
@@ -26,8 +23,8 @@ def main():
         grayscale()
     if choice_of_function == "flip":
         flip()
-    if choice_of_function == "shrink":
-        Shrinks()
+    # if choice_of_function == "shrink":
+        # shrink()
     if choice_of_function == "hide":
         hide(image)
 
@@ -74,43 +71,17 @@ def flip():
         vertical_flip = image.transpose(Image.FLIP_TOP_BOTTOM)
         vertical_flip.show()
 
-def Shrinks(new_image, width, height, image):
-    width, height = image.size 
-    new_width = int((width/2) - (width % 2 ))
-    new_height = int((height/2) - (height % 2))
-    x2 = 0
-    y2 = 0
-    shrink_image = Image.new ("RGB", (new_width, new_height), "white")
-    
-    for x in range(0, width, 2):
-        for y in range(0, height, 2):
-            try:
-                r1, g1, b1 = image.getpixel((x, y))
-                r2, g2, b2 = image.getpixel((x + 1, y))
-                r3, g3, b3 = image.getpixel((x, y + 1))
-                r4, g4, b4 = image.getpixel((x + 1, y + 1))
-
-                ave_r = int((r1 + r2 + r3 + r4)/4)
-                ave_g = int((g1 + g2 + g3 + g4)/4)
-                ave_b = int((b1 + b2 + b3 + b4)/4)
-                shrink_image.putpixel((x2, y2), (ave_r, ave_g, ave_b))
-            except IndexError:
-                pass
-
-            y2 += 1 
-        x2 += 1
-        y2 = 0
-
-    shrink_image.show()
+# def shrink():
 
 def hide(image):
     # gets the width and height of the image
     width, height = image.size
     # creates a new image that is the same size as the old one, gets rgb format, and makes it pure white
     new_image = Image.new("RGB", (image.size), "white")
+    new_image2 = Image.new("RGB", (image.size), "white")
     # variable that asks the user whether they want to hide an image or a message
     func_choice = input("Do you wish to hide an image or a message? [image/message]: ")
-    
+
     if func_choice == "message":
         # asks the user for their hidden message
         hidden_message = input("What is your hidden message?: ")
@@ -154,7 +125,57 @@ def hide(image):
                                 new_image.putpixel((x, y), (r, g, b))
                         new_image.show()
                         sys.exit()
-                        
+
+    if func_choice == "image":
+        print("Here are your choices:\n")
+        # gives image choices
+        print("buster.png\nhorse.jpg\nhyena.jpg\njump.jpeg\nkitty.png\nlatestart.jpg\nnightbee.png\nowlbear.jpg\nphilip.jpg\nthanksgiving.jpg\n")
+        # asks the user for the image that they want to hide in the original
+        hidden_image = input("What is your choice of image to hide?: ")
+        # defines this chosen image as "image2"
+        image2 = Image.open(hidden_image)
+        # gets a new width and height for the chosen image
+        width2, height2 = image2.size
+        # goes through every pixel from the original image
+        for x in range(width):
+            for y in range(height):
+                # goes through every pixel of the new image, putting it inside of the old image
+                for x2 in range(width2):
+                    for y2 in range(height2):
+                        # gets the rgb values for each pixel
+                        r,g,b = image.getpixel((x, y))
+                        r2,g2,b2 = image2.getpixel((x2, y2))
+                        # gets the first four binary values of the red rgb value as a string
+                        bin_red1 = (bin(r)[2:6])
+                        # gets the first four binary values of the green rgb value as a string
+                        bin_green1 = (bin(g)[2:6])
+                        # gets the first four binary values of the blue rgb value as a string
+                        bin_blue1 = (bin(b)[2:6])
+                        # gets the first four binary values of the second image's red rgb value
+                        bin_red2 = (bin(r2)[2:6])
+                        # gets the first four binary values of the second image's green rgb value
+                        bin_green2 = (bin(g2)[2:6])
+                        # gets the first four binary values of the second image's blue rgb value
+                        bin_blue2 = (bin(b2)[2:6])
+                        # adds the first half of the first binary rgb values to the first half of the second binary rgb values
+                        hidden_red = int(bin_red1 + bin_red2)
+                        hidden_green = int(bin_green1 + bin_green2)
+                        hidden_blue = int(bin_blue1 + bin_blue2)
+                        # put in the new rgb values into the new image in the same position as they were in the old image
+                        new_image2.putpixel((x, y), (hidden_red, hidden_green, hidden_blue))
+                        if str(x2) == (str(width2)[-1]) and str(y2) == (str(height2)[-1]):
+                            for x in range(width):
+                                for y in range(height):
+                                    # gets the rgb values for evry single pixel after the iteration is done
+                                    r, g, b = image.getpixel((x, y))
+                                    # puts a new pixel back into the new image in the same position
+                                    new_image2.putpixel((x, y), (r, g, b))
+                            new_image2.show()
+                            sys.exit()
+
+
+        
+
                     
                     
 
