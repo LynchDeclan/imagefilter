@@ -26,6 +26,7 @@ def main():
     # if choice_of_function == "shrink":
         # shrink()
     if choice_of_function == "hide":
+        image.show()
         hide(image)
 
 
