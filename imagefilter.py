@@ -15,10 +15,6 @@ def main():
     
     # create a new image of the same size as the original
     new_image = Image.new("RGB", (image.size), "white")
-
-    # variable that asks the user whether they want to hide an image or a message
-    func_choice1 = input("Do you wish to hide a message? [yes/no]: ")
-    func_choice2 = input("Do you wish to hide an image? [yes/no]: ")
     
     # ask the user what they want to do with this image
     choice_of_function = input("Choose to run (grayscale), (flip), (shrink), or (hide): ")
@@ -31,6 +27,9 @@ def main():
         # shrink()
     if choice_of_function == "hide":
         image.show()
+        # variables that ask the user whether they want to hide an image or a message
+        func_choice1 = input("Do you wish to hide a message? [yes/no]: ")
+        func_choice2 = input("Do you wish to hide an image? [yes/no]: ")
         hide(image, width, height, func_choice1, func_choice2)
     
 
@@ -129,7 +128,7 @@ def hide(image, width, height, func_choice1, func_choice2):
                                 new_image.putpixel((x, y), (r, g, b))
                         new_image.show()
                         sys.exit()
-    
+
     if func_choice2 == "yes":
         print("Here are your choices:\n")
         # gives image choices
