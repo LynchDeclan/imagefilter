@@ -4,10 +4,10 @@ import math
 import sys
 
 def main():
-    # Open image
+    # Opens an image
     image = Image.open('nightbee.png')
 
-    # get the height and width
+    # gets the width and height of the image
     width, height = image.size
 
     # get the rgb values of a pixel at a certain coordinate
@@ -16,9 +16,13 @@ def main():
     # create a new image of the same size as the original
     new_image = Image.new("RGB", (image.size), "white")
 
+    # variable that asks the user whether they want to hide an image or a message
+    func_choice1 = input("Do you wish to hide a message? [yes/no]: ")
+    func_choice2 = input("Do you wish to hide an image? [yes/no]: ")
+    
     # ask the user what they want to do with this image
-    choice_of_function = input(
-        "Choose to run (grayscale), (flip), (shrink), or (hide): ")
+    choice_of_function = input("Choose to run (grayscale), (flip), (shrink), or (hide): ")
+
     if choice_of_function == "grayscale":
         grayscale()
     if choice_of_function == "flip":
@@ -27,7 +31,8 @@ def main():
         # shrink()
     if choice_of_function == "hide":
         image.show()
-        hide(image)
+        hide(image, width, height, func_choice1, func_choice2)
+    
 
 
 
@@ -74,16 +79,14 @@ def flip():
 
 # def shrink():
 
-def hide(image):
-    # gets the width and height of the image
-    width, height = image.size
+
+def hide(image, width, height, func_choice1, func_choice2):
     # creates a new image that is the same size as the old one, gets rgb format, and makes it pure white
     new_image = Image.new("RGB", (image.size), "white")
     new_image2 = Image.new("RGB", (image.size), "white")
-    # variable that asks the user whether they want to hide an image or a message
-    func_choice = input("Do you wish to hide an image or a message? [image/message]: ")
+    
 
-    if func_choice == "message":
+    if func_choice1 == "yes":
         # asks the user for their hidden message
         hidden_message = input("What is your hidden message?: ")
         # defines an empty array
@@ -126,8 +129,8 @@ def hide(image):
                                 new_image.putpixel((x, y), (r, g, b))
                         new_image.show()
                         sys.exit()
-
-    if func_choice == "image":
+    
+    if func_choice2 == "yes":
         print("Here are your choices:\n")
         # gives image choices
         print("buster.png\nhorse.jpg\nhyena.jpg\njump.jpeg\nkitty.png\nlatestart.jpg\nnightbee.png\nowlbear.jpg\nphilip.jpg\nthanksgiving.jpg\n")
